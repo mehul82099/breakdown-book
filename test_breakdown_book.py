@@ -280,8 +280,9 @@ class CliTests(unittest.TestCase):
         self.assertIn("no such machine", err)
 
     def test_resolve_without_end_uses_now(self):
+        # start far in the past: "now" must be after it in any CI timezone
         self.run_cli("add-machine", "--name", "Lathe 1")
-        self.run_cli("log", "--machine", "m1", "--start", "2026-11-18T09:00")
+        self.run_cli("log", "--machine", "m1", "--start", "2020-01-01T09:00")
         code, out, _ = self.run_cli("resolve", "--breakdown", "b1")
         self.assertEqual(code, 0)
         self.assertIn("resolved b1", out)
